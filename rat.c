@@ -17,6 +17,7 @@ int is_file_empty() {
 int list_records() {	
 	if (is_file_empty()) {
 		puts("No records");
+		return EXIT_FAILURE;
 	}
 	FILE* file;
 	file = fopen(".rat", "r");
