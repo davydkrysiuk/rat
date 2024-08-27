@@ -5,7 +5,6 @@
 int is_file_empty() {
 	FILE* file = fopen(".rat", "r");
 	if (file == NULL) {
-		puts("Unable to open the file");
 		return EXIT_FAILURE;
 	}
 	fseek(file, 0, SEEK_END);
@@ -15,12 +14,10 @@ int is_file_empty() {
 	return (file_size == 0);
 }
 
-int list_records() {
+int list_records() {	
 	if (is_file_empty()) {
 		puts("No records");
-		return EXIT_SUCCESS;
 	}
-	
 	FILE* file;
 	file = fopen(".rat", "r");
 	char* line = NULL;
@@ -28,7 +25,8 @@ int list_records() {
 	ssize_t read;
 	
 	if (file == NULL) {
-		puts("Unable to get records. Try creating one");
+		puts("No records");
+		free(line);
 		return EXIT_FAILURE;
 	}
 	
@@ -39,7 +37,7 @@ int list_records() {
 			continue;
 		}
 		i++;
-		printf("[%d] %s", i, line);
+		printf("\033[0;32m[%d] \033[0;37m%s", i, line);
 	}
 	printf("\n");
 
