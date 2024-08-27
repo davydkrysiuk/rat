@@ -104,7 +104,7 @@ int create_record(char* text) {
 int main(int argc, char** argv) {
 
 	if (argc < 2) {
-		puts("Provide command.\n -l        to list records \n -rm <x>   to remove record with given number x \n -mk <\"x\"> to create a record");
+		list_records();
 		return EXIT_FAILURE;
 	}
 
