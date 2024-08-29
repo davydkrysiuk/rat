@@ -1,3 +1,3 @@
-all: rat.c rat
+all: rat.c
 	clang rat.c -o rat
 
