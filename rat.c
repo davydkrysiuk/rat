@@ -7,6 +7,7 @@ typedef struct {
 	int size;
 } Records; 
 
+
 int is_file_empty() {
 	FILE* file = fopen(".rat", "r");
 	if (file == NULL) {
@@ -129,7 +130,25 @@ int list_records(Records* records) {
 	return EXIT_SUCCESS;
 }
 
+int handle_record_remove(Records* records, int argc, char** argv) {
+	if (argc < 3) {
+		puts("No record number was provided");
+		return EXIT_FAILURE;
+	}
+	remove_record(records, atoi(argv[2]) - 1);
+	write_records(records);
+	return EXIT_SUCCESS;
+}
 
+int handle_record_create(Records* records, int argc, char** argv) {
+	if (argc < 3) {
+		puts("No record text was provided");
+		return EXIT_FAILURE;
+	}
+	push_record(records, argv[2]);
+	write_records(records);
+	return EXIT_SUCCESS;
+}
 
 int main(int argc, char** argv) {
 	Records records;
@@ -137,47 +156,18 @@ int main(int argc, char** argv) {
 	init_records(&records);
 	load_records(&records);
 
-	
-	if (argc < 2) {
+	if (argv[1] == NULL) {
 		list_records(&records);
-		return EXIT_FAILURE;
-	}
-
-	for (size_t i = 1; i < argc; ++i) {
-		char* current = argv[i];
-
-		if (strcmp(current, "-l") == 0) {
+	} else {
+		if (strcmp(argv[1], "ls") == 0) {
 			list_records(&records);
-		} else if (strcmp(current, "-rm") == 0) {
-			if (argc < 3) {
-				puts("Provide record number");
-				return EXIT_FAILURE;
-			}
-
-			remove_record(&records, atoi(argv[2]) - 1); // -1 for 0 based indexing
-
-			write_records(&records);
-			return EXIT_SUCCESS;
-		} else if (strcmp(current, "-mk") == 0) {
-			if (argc < 3) {
-				puts("Provide record text");
-				return EXIT_FAILURE;
-			} else if (argc > 3) {
-				puts("Too many arguements. Use \"\" for record content. Usage: rat -mk \"text\"");
-				return EXIT_FAILURE;
-			}
-
-			if (strcmp(argv[2], "") == 0) {
-				puts("Provide record text");
-				return EXIT_FAILURE;
-			}
-			push_record(&records, argv[2]);
-			write_records(&records);
-			return EXIT_SUCCESS;
+		} else if (strcmp(argv[1], "rm") == 0) {
+				handle_record_remove(&records, argc, argv);
+		} else if (strcmp(argv[1], "mk") == 0) {
+			handle_record_create(&records, argc, argv);
 		} else {
-			puts("Unknown command.\n -l        to list records \n -rm <x>   to remove record with given number x \n -mk <\"x\"> to create a record");
+			list_records(&records);
 		}
-
 	}
 }
 
