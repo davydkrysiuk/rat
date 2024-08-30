@@ -143,7 +143,9 @@ int handle_record_remove(Records* records, int argc, char** argv) {
 		puts("No record number was provided");
 		return EXIT_FAILURE;
 	}
+
 	remove_record(records, atoi(argv[2]) - 1);
+	
 	write_records(records);
 	return EXIT_SUCCESS;
 }
@@ -195,4 +197,3 @@ int main(int argc, char** argv) {
 }
 
 // 00:52 -> 45%
-// 00:60 -> ???
