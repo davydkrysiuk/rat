@@ -1,2 +1,8 @@
 # RAT - Reminders and tasks
-![Demo](https://github.com/davydkrysiuk/rat/blob/main/demo.gif)
+| Command    | Arguement | Explanation  |
+| -------- | ------- | ------- |
+| ls  |     |   list all records  |  
+| mk | \<str\>     | create new record |
+| rm    | \<int\>    | remove record    |
+| sw    | \<int\> \<int\>   | swap two records   |
+
