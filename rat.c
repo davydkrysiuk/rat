@@ -102,6 +102,14 @@ int load_records(Records* records) {
 	return EXIT_SUCCESS;
 }
 
+int swap_records(Records* records, int a, int b) {
+	// TODO: Handle a||b out of the range
+   	char* temp = records->records[a];
+	records->records[a] = records->records[b];
+	records->records[b] = temp;
+	return EXIT_SUCCESS;
+}
+
 int write_records(Records* records) {
 	FILE* file = fopen(".rat", "w");
 	if (file == NULL) {
@@ -150,24 +158,41 @@ int handle_record_create(Records* records, int argc, char** argv) {
 	return EXIT_SUCCESS;
 }
 
+int handle_record_swap(Records* records, int argc, char** argv) {
+	if (argc < 4) {
+		puts("Not enough arguements for a swap command. Provide two indexes to be swaped");
+		return EXIT_FAILURE;
+	}
+
+	swap_records(records, atoi(argv[2]) - 1, atoi(argv[3]) - 1);
+	write_records(records);
+	return EXIT_SUCCESS;
+}
+
 int main(int argc, char** argv) {
 	Records records;
 	init_records_file();
 	init_records(&records);
 	load_records(&records);
 
-	if (argv[1] == NULL) {
+	char* command =argv[1];
+	
+	if (command == NULL) {
 		list_records(&records);
 	} else {
-		if (strcmp(argv[1], "ls") == 0) {
+		if (strcmp(command, "ls") == 0) {
 			list_records(&records);
-		} else if (strcmp(argv[1], "rm") == 0) {
+		} else if (strcmp(command, "rm") == 0) {
 				handle_record_remove(&records, argc, argv);
-		} else if (strcmp(argv[1], "mk") == 0) {
+		} else if (strcmp(command, "mk") == 0) {
 			handle_record_create(&records, argc, argv);
+		} else if (strcmp(command, "sw") == 0) {
+			handle_record_swap(&records, argc, argv);
 		} else {
 			list_records(&records);
 		}
 	}
 }
 
+// 00:52 -> 45%
+// 00:60 -> ???
