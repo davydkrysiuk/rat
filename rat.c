@@ -130,7 +130,15 @@ int write_records(Records* records) {
 int list_records(Records* records) {
 	if (records->size > 0) {
 		for (int i = 0; i < records->size; ++i) {
-			printf("[%d] %s\n", i + 1, records->records[i]);
+			if (records->size > 10 && i < 9) {
+				printf(" [%d] %s\n", i + 1, records->records[i]);
+			} else if (records->size > 99 & i < 99 && i < 9) {
+				printf("  [%d] %s\n", i + 1, records->records[i]);
+			} else if (records->size > 99 & i < 99 && i > 9) {
+				printf(" [%d] %s\n", i + 1, records->records[i]);
+			} else {
+				printf("[%d] %s\n", i + 1, records->records[i]);
+			}
 		}
 	} else {
 		puts("No records. Try creating one");
