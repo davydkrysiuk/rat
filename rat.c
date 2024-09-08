@@ -195,5 +195,3 @@ int main(int argc, char** argv) {
 		}
 	}
 }
-
-// 00:52 -> 45%
