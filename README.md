@@ -1,4 +1,4 @@
-# RAT - Reminders and tasks
+# RAT
 | Command    | Arguement | Explanation  |
 | -------- | ------- | ------- |
 | ls  |     |   list all records  |  
